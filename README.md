@@ -92,7 +92,14 @@ http:
 
 ### Finding your console ID
 
-Launch the mobile app on your LAN while capturing DNS on a gateway the phone traverses:
+UniFi OS Server keeps it in its nginx config, inside the container:
+
+```bash
+docker exec unifi-os-server cat /data/unifi-core/config/http/direct-connect-domain.conf
+# server_name <your-console-id>.id.ui.direct;
+```
+
+Use your container's name, or `podman exec` on Ubiquiti's own install. You can also catch it from the phone's side: launch the mobile app on your LAN while capturing DNS on a gateway the phone traverses:
 
 ```bash
 tcpdump -i any -nn 'host <phone-ip> and port 53' 2>&1 | grep 'id.ui.direct'
